@@ -1,0 +1,29 @@
+# Dependabot: the family's dependencies are checked weekly, and a
+# security update is a pull request like any other.
+#
+# The security advisories are the reason this file exists. A
+# transitive dependency sat at a vulnerable version for a month
+# because nothing was watching the lockfile.
+version: 2
+updates:
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      uv-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"

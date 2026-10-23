@@ -1,0 +1,8 @@
+# actions-runner mounts as `ecp runner`. The kit owns its own CLI
+# (`arun`), so the whole surface is delegated: `ecp runner <anything...>`
+# goes to arun's own parser, which owns the argument parsing.
+
+[passthrough]
+summary = "The deterministic agent-model pipeline runner"
+argv = ["uv", "run", "arun"]
+requires = ["uv"]
