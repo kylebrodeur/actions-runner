@@ -1,0 +1,38 @@
+name: "Text gates"
+description: "Run the actions-runner's deterministic text gates (codepoints/fingerprint) over files on pull_request/push. Red = the text does not stage. Model stages deliberately stay local (private endpoints + secrets) - this action runs ONLY the gates that need no model calls."
+inputs:
+  config:
+    description: "Path to the pipeline config carrying the gate definitions"
+    required: true
+  gate:
+    description: "Gate name from the config's `gates:` (repeatable via separate steps)"
+    required: true
+  files:
+    description: "Whitespace-separated list of files to gate"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Resolve the kit source (vendored-first; every miss fails LOUD)
+      shell: bash
+      run: |
+        if [ -d "tools/actions-runner" ]; then
+          echo "kit source: vendored tools/actions-runner"
+          echo "KIT_DIR=tools/actions-runner" >> "$GITHUB_ENV"
+        elif [ -f "$GITHUB_ACTION_PATH/../../pyproject.toml" ]; then
+          echo "kit source: the vendored kit tree beside this action"
+          echo "KIT_DIR=$GITHUB_ACTION_PATH/../.." >> "$GITHUB_ENV"
+        else
+          echo "::error::No kit source found. Deliver the kit by vendoring" \
+               "(copy actions-runner/ into tools/actions-runner, plus this" \
+               "actions/text-gates/ into .github/actions/). Cross-repo refs to" \
+               "a private kit need an access token and are NOT supported."
+          exit 1
+        fi
+    - uses: astral-sh/setup-uv@v7
+      with:
+        version: "latest"
+    - name: Run the text gates
+      shell: bash
+      run: |
+        uv run --project "$KIT_DIR" python -m runner.cli gate "${{ inputs.config }}" "${{ inputs.gate }}" ${{ inputs.files }}

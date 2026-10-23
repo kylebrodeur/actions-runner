@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "latest"
+      - name: Install
+        run: uv sync --group dev
+      - name: Tests
+        run: uv run pytest tests -q
+      - name: Lint
+        run: uv run ruff check .
+
+  text-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "latest"
+      - name: The repo's own deterministic text gate over the public-facing markdown
+        run: uv run arun gate examples/example-pipeline.yml dash-gate README.md AGENTS.md SECURITY.md CONTRIBUTING.md docs/*.md reference/README.md

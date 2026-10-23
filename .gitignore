@@ -1,0 +1,19 @@
+# OS noise
+.DS_Store
+
+# Python caches
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+
+# Node
+node_modules/
+
+# Virtualenvs
+.venv/
+
+# Local secrets
+.env
+.env.*
+!.env.example

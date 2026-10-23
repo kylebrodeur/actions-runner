@@ -1,0 +1,86 @@
+# Example pipeline: a writing-style duo, the shape the kit was measured on.
+# Any pipeline with model seats + a human publish gate fits the same config.
+
+version: 1
+
+defaults:
+  primary: writer-deep
+  endpoints:
+    deep-server: https://gpu-host.example/v1        # self-hosted model server
+    fast-server: https://gpu-host-2.example/v1
+  auth:
+    bearer_env: RUNNER_TOKEN                        # default token env (chain: seat auth_env > this)
+  concurrency: 2
+  apply:                                            # the human-gate vocabulary
+    key: stage
+    values:
+      accept: editing
+    copy_suffix: ".accepted.md"
+    wins_over_prose: true
+
+pipeline:
+  # --- executable stages (declare `agents`) ---
+  draft:
+    agents: [writer-deep, writer-fast]
+    mode: parallel                                  # same brief -> both seats at once
+    gates: [dash-gate]                              # deterministic gates BEFORE tokens
+    outputs: [{artifact: draft.md}]
+
+  counterparty:
+    agents: [writer-deep, writer-fast]
+    mode: cross                                     # each reads the other's artifact
+    outputs: [{artifact: bridge-notes.md}]
+
+  review:
+    agents: [reviewer]
+    mode: sequential-passes                         # runs `passes` IN ORDER
+    passes: [source-and-fact, grammar-and-tense, voice, formatting, optional-cuts]
+    gates: [dash-gate]
+    outputs: [{artifact: review.md, advice: max-8-per-pass}]
+
+  # --- documentation stages (no `agents`: NOT executable) ---
+  handoff:
+    to: human-gate
+
+  human-gate:
+    human: kyle
+    decision: [accept, redraft, advice-round, park]
+    notes: >
+      Publish gate stays human. Nothing applies to publish-bound prose.
+      `arun run <config> <any-early-stage> --decision accept --brief piece.md`
+      bumps the machine field only (defaults.apply vocabulary).
+
+gates:
+  dash-gate:
+    type: codepoints                                # fail on any of these chars (fences stripped)
+    codepoints: ["U+2014", "U+2013"]
+
+agent_routes:
+  writer-deep:
+    model: deep-model-13b
+    endpoint_key: deep-server
+    max_tokens: 8000                                # craft reasoning burns 10-14K chars first; budget up front
+    temperature: 0.8
+    budget_escalation: {factor: 4, rounds: 1}       # empty content + finish=length = ran out -> one grown retry
+    prompts:
+      draft: >-
+        Write the piece from this brief, planning structure first:\n\n{brief}
+  writer-fast:
+    model: fast-model-7b
+    endpoint_key: fast-server
+    max_tokens: 2000
+    temperature: 0.8
+    prompts:
+      counterparty: >-
+        Another writer took the same brief. Propose a better bridge or ending;
+        an informed second take, not a merge.\n\n=== their draft ===\n{other}
+  reviewer:
+    model: reviewer-32b
+    endpoint: https://api.example/v1                # a third-party endpoint; auth_env = its own key
+    auth_env: REVIEWER_API_KEY
+    max_tokens: 4000
+    temperature: 0.2
+    prompts:
+      "<stage>": >-
+        Audit pass: {pass_name} ONLY. Report findings as evidence; never rewrite.
+        \n\n=== draft ===\n{draft}

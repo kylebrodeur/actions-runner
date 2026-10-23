@@ -1,0 +1,34 @@
+# actions-runner: the doc map for agents
+
+## This repo
+
+- [SYSTEM.md](SYSTEM.md): the docs home. The system: pieces, the law each
+  carries, the extraction contract. The one starting point.
+- [docs/quickstart.md](docs/quickstart.md): the numbered path from
+  nothing to a finished stage, all commands copy-pasteable.
+- [docs/how-to.md](docs/how-to.md): day-to-day operation, grouped by
+  task: gates for free, one stage, worklog reads, human-gate decisions,
+  cold boots, CI wiring, hooks, vendoring.
+- [docs/RUNBOOK.md](docs/RUNBOOK.md): the operator's reference: the full
+  command surface, every config key, every error string with its fix,
+  recovery procedures.
+- [AGENTS.md](AGENTS.md): the boundary as rules an agent obeys.
+- [CONTRIBUTING.md](CONTRIBUTING.md): setup, tests, lint, the change bar.
+- [SECURITY.md](SECURITY.md): vulnerability reporting, scope.
+- skills/actions-runner/SKILL.md: the skill form of the boundary.
+- [reference/README.md](reference/README.md): verbatim reference copies
+  the machinery was measured in (an origin runner).
+- [examples/example-pipeline.yml](examples/example-pipeline.yml): a
+  complete pipeline config (seats, modes, gates, apply vocabulary).
+- actions/text-gates/: the composite Action for deterministic text gates
+  in CI; actions/example-workflow.yml shows the workflow shape.
+
+## The family (AI ECP)
+
+- the family catalog (the map home; in the private control-plane repo).
+- repo-guards: governance kit (gates, hooks, CI shape).
+- ecp-toolkit: the control plane CLI (PLANNED).
+- agent-workspace-kit: manifest-driven agent-team launcher.
+- docs-policy-kit: config-driven docs engine.
+
+Verified 2026-10-22.

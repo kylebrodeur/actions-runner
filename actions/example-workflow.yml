@@ -1,0 +1,37 @@
+# Example workflow wiring for the actions-runner kit (copy to
+# <repo>/.github/workflows/). Same delivery model as repo-guards: VENDOR the
+# kit (actions-runner/ -> tools/actions-runner) and the action
+# (actions/text-gates/ -> .github/actions/text-gates/).
+#
+# WHAT BELONGS IN CI (aligned with the family standard: uv-native,
+# checkout@v4, required checks):
+#   - deterministic TEXT GATES (codepoints/fingerprint): CI-clean, no model
+#     calls, no secrets — the same shape repo-guards' prose gate enforces.
+# WHAT STAYS LOCAL BY DESIGN:
+#   - every MODEL stage (writers/reviewers/polishers): private endpoints,
+#     bearer tokens, GPU servers, cold-boot windows. `arun run` is a local
+#     batch surface; running model stages on shared CI runners would leak
+#     endpoints into logs and burn budgets unattended.
+#   - the human gate: by definition.
+
+name: Text gates
+
+on:
+  pull_request:
+    paths:
+      - "**.md"
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect the changed markdown files
+        id: files
+        run: |
+          echo "list=$(git diff --name-only --diff-filter=ACMR '${{ github.event.pull_request.base.sha }}' -- '*.md' | tr '\n' ' ')" >> "$GITHUB_OUTPUT"
+      - uses: ./tools/actions-runner/actions/text-gates  # vendored composite
+        with:
+          config: actions/pipeline.yml
+          gate: dash-gate
+          files: ${{ steps.files.outputs.list }}
