@@ -72,7 +72,7 @@ the call instead of silently degrading a trained model). **Unknown gate
 types fail closed**; a config referencing an unimplemented gate refuses,
 never skips. Custom gate implementations join via the hook system.
 
-### 5. Stage executor (`runner/stages.py`): the four measured shapes
+### 5. Stage executor (`runner/stages.py`): the five measured shapes
 
 | mode | shape |
 |---|---|
@@ -83,7 +83,7 @@ never skips. Custom gate implementations join via the hook system.
 | `parallel-consolidate` | seats run concurrently; non-duplicate findings join (content-hash dedupe) |
 
 Per-seat prompt templates live in the route (`prompts.<stage>`; `*` is
-the fallthrough) with `{brief}`, `{other}`, `{draft}`, `{pass}` slots:
+the fallthrough) with `{brief}`, `{other}`, `{draft}`, `{pass_name}` slots:
 the persona is config; the executor never hardcodes prose. Every mode
 records + writes artifacts identically.
 
@@ -135,7 +135,7 @@ printed, logged, or stored.
 
 ## Extraction contract (how this relates to productized instances)
 
-The kit is DECOPULED machinery: no project names, no project prompts, no
+The kit is DECOUPLED machinery: no project names, no project prompts, no
 project gate vocabularies, no project paths. A productized pipeline (a
 repo that has one) keeps its own runner/configs/skills and either (a)
 imports this package as library machinery while keeping its CLI surface,

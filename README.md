@@ -34,10 +34,16 @@ family: independent, single-purpose repos. Siblings:
 ## Install
 
 ```bash
-uv tool install actions-runner        # PLANNED until the first release tag
-uv tool install --from <path-to-kit> arun
+uv tool install --from "git+https://github.com/kylebrodeur/actions-runner@v0.1.1" actions-runner
 # or run from a checkout: uv run arun ...
 ```
+
+**The kit installs from GitHub, at a tag.** It is not on PyPI, and the
+name is not available there either: PyPI already has an unrelated
+project called `actions-runner`, so a bare `uv tool install
+actions-runner` would install somebody else's code without saying so.
+The family's one registry entry is `ecp-toolkit`, the control plane.
+See the family's distribution policy.
 
 The library surface (`from runner import hooks, execute_stage, ...`) is
 first-class: hosts import the machinery behind their own CLIs and extend

@@ -233,10 +233,18 @@ bump (`stage: editing`). The decision also landed in the worklog:
 
 ## What is PLANNED (not shipped)
 
-`uv tool install actions-runner` and the published PyPI package are
-PLANNED; until the first release tag exists, install from a checkout or
-vendored copy (the delivery model in `SYSTEM.md`). Everything above
-except that install line runs today.
+**This kit is not on PyPI, and it will not be.** PyPI already has an
+unrelated project named `actions-runner`, so a bare `uv tool install
+actions-runner` would install somebody else's code. The kit installs
+from GitHub at a tag, which is the family's model for every kit except
+the control plane:
+
+```bash
+uv tool install --from "git+https://github.com/kylebrodeur/actions-runner@v0.1.1" actions-runner
+```
+
+The control plane, `ecp-toolkit`, is the family's one registry entry.
+See the family's distribution policy. Everything above runs today.
 
 ## Where next
 
