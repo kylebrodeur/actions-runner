@@ -1,8 +1,17 @@
-# actions-runner mounts as `ecp runner`. The kit owns its own CLI
-# (`arun`), so the whole surface is delegated: `ecp runner <anything...>`
-# goes to arun's own parser, which owns the argument parsing.
+# actions-runner mounts as `ecp actions-runner`. The kit owns its own
+# CLI (`arun`), so the whole surface is delegated: `ecp actions-runner
+# <anything...>` goes to arun's own parser, which owns the argument
+# parsing.
+#
+# There is NO `requires` here, and that is deliberate. `requires` names
+# the CONFIG KEYS a command needs, and the gate refuses the command
+# when one of them is unset. It does not name an executable. A manifest
+# that said `requires = ["uv"]` was asking for a config key named "uv",
+# and every mounted command failed with "actions-runner is not
+# configured: missing uv" before it ever ran. A missing EXECUTABLE is
+# the executor's job, and it says so: "uv is not available on PATH",
+# exit 127.
 
 [passthrough]
 summary = "The deterministic agent-model pipeline runner"
 argv = ["uv", "run", "arun"]
-requires = ["uv"]
