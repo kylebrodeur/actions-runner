@@ -144,7 +144,7 @@ is removed by this kit's existence.
 
 ## Tests
 
-37 tests: config schema + root law + docs-not-stages + apply-spec;
+38 tests: config schema + root law + docs-not-stages + apply-spec;
 worklog append/isolation/defaults; route resolution (direct/key/auth
 chain/fatals); gates (codepoints/fingerprint/fail-closed/happy); hooks
 (registration/decorator/threading/containment); stage executor against a

@@ -1,4 +1,4 @@
-<!-- STATUS: VERIFIED 2026-10-22 against runner/*.py (37 tests passing); every error string in RUNBOOK.md is copied from the source or captured live. -->
+<!-- STATUS: VERIFIED 2026-10-24 against runner/*.py (38 tests passing); every error string in RUNBOOK.md is copied from the source or captured live. -->
 # How-to: day-to-day operation
 
 Task-shaped answers for the things you do repeatedly once the runner is

@@ -1,4 +1,4 @@
-<!-- STATUS: VERIFIED 2026-10-22 against runner/cli.py + runner/stages.py + runner/apply.py (37 tests passing). The fake-endpoint example was executed as written; its output is copied verbatim. -->
+<!-- STATUS: VERIFIED 2026-10-24 against runner/cli.py + runner/stages.py + runner/apply.py (38 tests passing). The fake-endpoint example was executed as written; its output is copied verbatim. -->
 # Quickstart: from nothing to a finished stage
 
 The numbered path: clone, install, verify the CLI, run gates for free,

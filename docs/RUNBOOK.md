@@ -1,4 +1,4 @@
-<!-- STATUS: VERIFIED 2026-10-22. Every error string below is quoted from runner/*.py source or captured from a live run; every flag was checked against the argparse definitions in runner/cli.py. -->
+<!-- STATUS: VERIFIED 2026-10-24. Every error string below is quoted from runner/*.py source or captured from a live run; every flag was checked against the argparse definitions in runner/cli.py. -->
 # RUNBOOK.md: the operator's reference
 
 The full command surface, every config key, the error strings and their

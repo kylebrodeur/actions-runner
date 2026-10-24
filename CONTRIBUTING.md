@@ -33,19 +33,23 @@ uv run ruff check runner tests
 
 ## Verify the documentation
 
-The repo belongs to the AI ECP documentation family. Run the family
-harness before any commit that adds or moves a doc:
+The repo belongs to the AI ECP documentation family. Run these before any
+commit that adds or moves a doc:
 
 ```bash
 uv run pytest tests -q
 uv run ruff check .
 ```
 
-Every `actions-runner:` line must be PASS. The harness checks the
-required doc files, README link resolution, the prose gates (no em or en
-dashes, no banned AI-slop words), funding parity, and indexing. Repo docs
-carry their check date: when you verify a claim about the code, note the
-date in the doc.
+Those commands print pytest and ruff output, not `actions-runner:` lines.
+The family harness that prints those lines checks the required doc files,
+README link resolution, the prose gates (no em or en dashes, no banned
+AI-slop words), funding parity, and indexing. It lives in the PRIVATE
+system repo and is maintainer-only; a public contributor runs the
+commands above, and the family harness runs on the maintainer's side.
+
+Repo docs carry their check date: when you verify a claim about the
+code, note the date in the doc.
 
 ## Open a change
 

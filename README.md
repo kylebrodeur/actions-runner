@@ -62,4 +62,4 @@ siblings: [repo-guards](https://github.com/kylebrodeur/repo-guards)
 
 [examples/example-pipeline.yml](examples/example-pipeline.yml) is a
 complete translated example. Tests: `uv run pytest tests -q`
-(check date: 2026-10-22, 37 passing).
+(check date: 2026-10-24, 38 passing).
