@@ -1,7 +1,7 @@
 """Pipeline config loader.
 
-One YAML file declares the whole pipeline. Schema (evolved from the
-writing-duo actions/writing-duo.yml, generalized):
+One YAML file declares the whole pipeline. Schema (generalized from a
+multi-stage writing pipeline):
 
     version: 1
 

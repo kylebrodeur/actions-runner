@@ -24,7 +24,7 @@ def test_documentation_stages_are_not_executable(tmp_path):
   handoff:
     to: human-gate
   human-gate:
-    human: kyle
+    human: editor
     decision: [accept, park]
 """
     cfg = write_config(tmp_path, raw)
