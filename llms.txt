@@ -16,8 +16,8 @@
 - [CONTRIBUTING.md](CONTRIBUTING.md): setup, tests, lint, the change bar.
 - [SECURITY.md](SECURITY.md): vulnerability reporting, scope.
 - skills/actions-runner/SKILL.md: the skill form of the boundary.
-- [reference/README.md](reference/README.md): verbatim reference copies
-  the machinery was measured in (an origin runner).
+- [reference/README.md](reference/README.md): where a worked example of
+  the design laws lives.
 - [examples/example-pipeline.yml](examples/example-pipeline.yml): a
   complete pipeline config (seats, modes, gates, apply vocabulary).
 - actions/text-gates/: the composite Action for deterministic text gates

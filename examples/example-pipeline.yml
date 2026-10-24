@@ -43,7 +43,7 @@ pipeline:
     to: human-gate
 
   human-gate:
-    human: kyle
+    human: editor
     decision: [accept, redraft, advice-round, park]
     notes: >
       Publish gate stays human. Nothing applies to publish-bound prose.

@@ -28,7 +28,7 @@ only-include = ["runner"]
 select = ["E", "F", "I", "B", "W"]
 
 [tool.ruff.lint.per-file-ignores]
-"reference/**" = ["ALL"]  # verbatim reference copies (md5 of the source)
+"reference/**" = ["ALL"]  # reference material is adapted, not linted as kit code
 
 [project.scripts]
 arun = "runner.cli:main"
