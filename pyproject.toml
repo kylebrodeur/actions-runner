@@ -5,11 +5,11 @@ description = "Config-driven local runner for agentic pipeline stages: routes, f
 requires-python = ">=3.11"
 dependencies = [
     "httpx>=0.27.0",
-    "pyyaml>=6.0",
+    "pyyaml>=6.0.4",
 ]
 
 [dependency-groups]
-dev = ["pytest>=8.0", "ruff>=0.8.0"]
+dev = ["pytest>=9.2.0", "ruff>=0.17.6"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
